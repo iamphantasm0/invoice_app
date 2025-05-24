@@ -3,258 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice Template - ONYX and GOLD Fabrics</title>
+    <title>Invoice - {{ company.name }}</title>
+    <!--
+        WeasyPrint works best with absolute URLs for external resources or embedded styles.
+        Tailwind CDN is used here. For local CSS, ensure WeasyPrint can access it (e.g., via base_url or absolute path).
+    -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Inter font - ensure it's available or use a common fallback */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #ffffff; /* White background for PDF */
+            color: #1f2937; /* Tailwind gray-800 */
+            font-size: 10pt; /* Base font size for PDF */
         }
-        .invoice-box {
-            max-width: 800px;
-            margin: 30px auto;
-            padding: 30px;
-            border: 1px solid #eee;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-            border-radius: 8px;
+        .invoice-container {
+            max-width: 800px; /* Standard A4-like width */
+            margin: 20px auto; /* Centering for preview, PDF generation ignores this for page */
+            padding: 25px; /* Reduced padding for more content space */
+            border: 1px solid #e5e7eb; /* Tailwind gray-200 */
+            background-color: #ffffff;
         }
+
+        /* Custom classes to complement Tailwind, especially for PDF rendering nuances */
+        .text-onyx { color: #17202a; }
+        .text-gold { color: #b9770e; }
+        .border-gold { border-color: #b9770e; }
+
         .header-section {
-            display: flex;
+            display: flex; /* Using flex for layout */
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #b9770e; /* Gold-like accent */
+            margin-bottom: 2rem; /* mb-8 */
+            padding-bottom: 1rem; /* pb-4 */
+            border-bottom: 2px solid #b9770e; /* border-b-2 border-gold */
         }
-        .header-section .company-details h1 {
-            color: #17202a; /* Darker (Onyx-like) text for company name */
-            margin-bottom: 5px;
+        .company-logo {
+            max-width: 150px; /* Limit logo size */
+            max-height: 75px;
+            object-fit: contain; /* Ensure logo aspect ratio is maintained */
         }
-        .header-section .invoice-title h2 {
-            color: #b9770e; /* Gold-like accent for "INVOICE" */
-            text-align: right;
-        }
-        .logo-placeholder {
-            width: 100px;
-            height: 100px;
-            background-color: #e2e8f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #718096;
-            font-size: 0.875rem;
-            border-radius: 8px;
-            text-align: center;
-        }
-        .details-section {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 30px;
-        }
-        .details-section div {
-            width: 48%;
-        }
-        .details-section h3 {
-            color: #b9770e; /* Gold-like accent */
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 5px;
-            margin-bottom: 10px;
+        .invoice-details p, .client-details p, .company-info p {
+            margin-bottom: 0.25rem; /* mb-1 */
+            line-height: 1.4;
         }
         .items-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 30px;
+            margin-bottom: 1.5rem; /* mb-6 */
         }
         .items-table th, .items-table td {
-            border: 1px solid #e2e8f0;
-            padding: 10px;
+            border: 1px solid #e5e7eb; /* border border-gray-200 */
+            padding: 0.5rem; /* p-2 */
             text-align: left;
+            vertical-align: top;
         }
         .items-table th {
-            background-color: #f7fafc;
-            color: #4a5568;
-            font-weight: bold;
+            background-color: #f9fafb; /* bg-gray-50 */
+            font-weight: 600; /* semibold */
+            color: #374151; /* text-gray-700 */
         }
-        .items-table td.description {
-            width: 40%;
-        }
-        .items-table td.quantity, .items-table td.unit-price, .items-table td.total {
-            text-align: right;
-        }
+        .items-table .text-right { text-align: right; }
         .totals-section {
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 30px;
+            margin-bottom: 1.5rem; /* mb-6 */
         }
-        .totals-section table {
-            width: 40%;
+        .totals-table {
+            width: 45%; /* Adjust width as needed */
             border-collapse: collapse;
         }
-        .totals-section td {
-            padding: 8px;
-            border: 1px solid #e2e8f0;
+        .totals-table td {
+            padding: 0.5rem; /* p-2 */
+            border: 1px solid #e5e7eb; /* border-gray-200 */
         }
-        .totals-section td.label {
-            font-weight: bold;
-            color: #4a5568;
+        .totals-table td.label {
+            font-weight: 600; /* semibold */
+            color: #374151; /* text-gray-700 */
         }
-        .totals-section td.amount {
-            text-align: right;
+        .totals-table td.amount { text-align: right; }
+
+        .payment-info-section, .notes-section {
+            margin-bottom: 1.5rem; /* mb-6 */
+            padding: 1rem; /* p-4 */
+            background-color: #f9fafb; /* bg-gray-50 */
+            border-radius: 0.375rem; /* rounded-md */
+            border: 1px solid #e5e7eb;
         }
-        .payment-info, .notes-section {
-            margin-bottom: 30px;
-            padding: 15px;
-            background-color: #f9fafb;
-            border-radius: 8px;
-        }
-        .payment-info h3, .notes-section h3 {
-            color: #b9770e; /* Gold-like accent */
-            margin-top: 0;
-        }
-        .footer {
+        .footer-section {
             text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #e2e8f0;
-            font-size: 0.875rem;
-            color: #718096;
+            margin-top: 2rem; /* mt-8 */
+            padding-top: 1rem; /* pt-4 */
+            border-top: 1px solid #d1d5db; /* border-gray-300 */
+            font-size: 0.875rem; /* text-sm */
+            color: #6b7280; /* text-gray-500 */
         }
+        h1, h2, h3 { margin-top: 0; }
+        h1 { font-size: 1.875rem; line-height: 2.25rem; /* text-3xl */ }
+        h2 { font-size: 1.5rem; line-height: 2rem; /* text-2xl */ }
+        h3 { font-size: 1.125rem; line-height: 1.75rem; /* text-lg */ margin-bottom: 0.5rem; /* mb-2 */ }
 
-        /* Excel compatibility styles */
-        .excel-compatible-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .excel-compatible-table td {
-            padding: 5px;
-            vertical-align: top;
-        }
-        .text-right { text-align: right; }
-        .font-bold { font-weight: bold; }
-        .text-lg { font-size: 1.125rem; }
-        .text-xl { font-size: 1.25rem; }
-        .text-2xl { font-size: 1.5rem; }
-        .text-4xl { font-size: 2.25rem; } /* Larger invoice title */
-        .text-onyx { color: #17202a; } /* Onyx-like color */
-        .text-gold { color: #b9770e; } /* Gold-like color */
-        .border-b-2 { border-bottom-width: 2px; }
-        .border-gold { border-color: #b9770e; }
-        .pb-2 { padding-bottom: 0.5rem; }
-        .mb-2 { margin-bottom: 0.5rem; }
-        .mb-8 { margin-bottom: 2rem; }
-        .mt-2 { margin-top: 0.5rem; }
-        .p-2 { padding: 0.5rem; }
-        .p-4 { padding: 1rem; }
-        .bg-gray-50 { background-color: #f9fafb; }
-        .bg-gray-100 { background-color: #f7fafc; }
-        .text-gray-700 { color: #4a5568; }
-        .text-gray-500 { color: #718096; }
-        .rounded-lg { border-radius: 0.5rem; }
-        .border { border-width: 1px; }
-        .w-full { width: 100%; }
-
-
+        /* Ensure table cells don't break words unnecessarily, especially descriptions */
+        .items-table td:first-child { word-break: break-word; }
     </style>
 </head>
 <body>
-    <div class="invoice-box">
-        <table class="excel-compatible-table mb-8">
-            <tr>
-                <td>
-                    <div class="logo-placeholder">{% if logo_base64 %}<img src="data:image/png;base64,{{ logo_base64 }}" width="100" />{% endif %}</div>
-                    <h1 class="text-2xl font-bold text-onyx mt-2">ONYX and GOLD Fabrics</h1>
-                    <p class="text-gray-500">Owner: Abefe Alaso</p>
-                    <p class="text-gray-500">08034343274</p>
-                    <!-- <p class="text-gray-500">[Your Company Address]</p>
-                    <p class="text-gray-500">[Your Company Email]</p> -->
-                </td>
-                <td class="text-right">
-                    <h2 class="text-4xl font-bold text-gold">INVOICE</h2>
-                    <p class="text-gray-700 mt-2"><span class="font-bold">Invoice #:</span> {{ invoice_number }}</p>
-                    <p class="text-gray-700"><span class="font-bold">Date:</span>  {{ due_date }}</p>
-                    <!-- <p class="text-gray-700"><span class="font-bold">Due Date:</span> [Specify Due Date]</p> -->
-                </td>
-            </tr>
-        </table>
+    <div class="invoice-container">
+        <div class="header-section">
+            <div class="company-info">
+                {% if logo_base64 %}
+                    <img src="data:image/png;base64,{{ logo_base64 }}" alt="{{ company.name }} Logo" class="company-logo mb-2">
+                {% elif company.logo_url %}  <img src="{{ company.logo_url }}" alt="{{ company.name }} Logo" class="company-logo mb-2">
+                {% else %}
+                    <div class="w-32 h-16 bg-gray-200 flex items-center justify-center text-gray-500 text-sm rounded mb-2">No Logo</div>
+                {% endif %}
+                <h1 class="text-2xl font-bold text-onyx">{{ company.name }}</h1>
+                <p>{{ company.owner }}</p>
+                <p>{{ company.address }}</p>
+                <p>Phone: {{ company.phone }}</p>
+                <p>Email: {{ company.email }}</p>
+                {% if company.website %}<p>Web: {{ company.website }}</p>{% endif %}
+            </div>
+            <div class="invoice-details text-right">
+                <h2 class="text-4xl font-bold text-gold">INVOICE</h2>
+                <p><span class="font-semibold">Invoice #:</span> {{ invoice_number }}</p>
+                <p><span class="font-semibold">Invoice Date:</span> {{ invoice_date }}</p>
+                {% if due_date %}
+                    <p><span class="font-semibold">Due Date:</span> {{ due_date }}</p>
+                {% else %}
+                    <p><span class="font-semibold">Due Date:</span> Not specified</p>
+                {% endif %}
+                {% if project_reference %}
+                    <p><span class="font-semibold">Reference:</span> {{ project_reference }}</p>
+                {% endif %}
+            </div>
+        </div>
 
-        <table class="excel-compatible-table mb-8">
-            <tr>
-                <td style="width: 50%;">
-                    <h3 class="text-lg font-bold text-gold border-b-2 border-gold pb-2 mb-2">BILLED TO:</h3>
-                  <p class="font-bold text-gray-700">{{ client_name }}</p>
-                     <!--  <p class="text-gray-500">[Client Contact Name]</p>
-                    <p class="text-gray-500">[Client Address]</p>
-                    <p class="text-gray-500">[Client Phone]</p>
-                    <p class="text-gray-500">[Client Email]</p> -->
-                </td>
-                <td style="width: 50%;">
-                     <h3 class="text-lg font-bold text-gold border-b-2 border-gold pb-2 mb-2">PROJECT/REFERENCE:</h3>
-                     <!-- <p class="text-gray-700">Order #1</p> -->
-                </td>
-            </tr>
-        </table>
+        <div class="grid grid-cols-2 gap-8 mb-8">
+            <div class="client-details">
+                <h3 class="text-lg font-semibold text-gold border-b-2 border-gold pb-1 mb-2">BILLED TO:</h3>
+                <p class="font-bold text-lg">{{ client_name }}</p>
+                {% if client_address %}<p>{{ client_address }}</p>{% endif %}
+                {% if client_phone %}<p>Phone: {{ client_phone }}</p>{% endif %}
+                {% if client_email %}<p>Email: {{ client_email }}</p>{% endif %}
+            </div>
+            </div>
 
-        <table class="items-table w-full mb-8">
+        <table class="items-table">
             <thead>
                 <tr>
-                    <th class="p-2 bg-gray-100 text-gray-700 font-bold border">DESCRIPTION</th>
-                    <th class="p-2 bg-gray-100 text-gray-700 font-bold border text-right">QUANTITY/UNIT</th>
-                    <th class="p-2 bg-gray-100 text-gray-700 font-bold border text-right">UNIT PRICE (NGN)</th>
-                    <th class="p-2 bg-gray-100 text-gray-700 font-bold border text-right">TOTAL (NGN)</th>
+                    <th>DESCRIPTION</th>
+                    <th class="text-right">QUANTITY</th>
+                    <th class="text-right">UNIT PRICE ({{ currency_symbol }})</th>
+                    <th class="text-right">TOTAL ({{ currency_symbol }})</th>
                 </tr>
             </thead>
             <tbody>
                 {% for item in items %}
-            <tr>
-                <td  class="p-2 border description">{{ item.description }}</td>
-                <td class="p-2 border quantity text-right">{{ item.quantity }}</td>
-                <td class="p-2 border unit-price text-right">{{ item.unit_price }}</td>
-                <td class="p-2 border total text-right">{{ item.total }}</td>
-            </tr>
-            {% endfor %}
-                <!-- <tr>
-                    <td class="p-2 border description">[Enter item description]</td>
-                    <td class="p-2 border quantity text-right">[Quantity]</td>
-                    <td class="p-2 border unit-price text-right">[0.00]</td>
-                    <td class="p-2 border total text-right">[0.00]</td>
-                </tr> -->
+                <tr>
+                    <td>{{ item.description }}</td>
+                    <td class="text-right">{{ item.quantity }}</td>
+                    <td class="text-right">{{ item.unit_price_formatted }}</td>
+                    <td class="text-right">{{ item.total_formatted }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" class="text-center py-4">No items listed.</td>
+                </tr>
+                {% endfor %}
             </tbody>
         </table>
 
-        <table class="excel-compatible-table mb-8" style="margin-left: auto; width: 40%;">
-             <tr>
-                <td class="p-2 text-gray-700">Subtotal:</td>
-                <td class="p-2 text-right font-bold text-gray-700"> NGN {{ subtotal }}</td> </tr>
-            <tr>
-                <td class="p-2 text-gray-700">Discount:</td>
-                <td class="p-2 text-right font-bold text-gray-700">NGN {{ discount }}</td>
-            </tr>
-            <tr>
-                <td class="p-2 text-gray-700">Tax (VAT %):</td>
-                <td class="p-2 text-right font-bold text-gray-700">NGN {{ vat_amount }}</td>
-            </tr>
-            <tr>
-                <td class="p-2 text-xl font-bold text-gold">TOTAL DUE:</td>
-                <td class="p-2 text-right text-xl font-bold text-gold"> NGN {{ total_price }}</td> </tr>
-        </table>
-
-        <div class="payment-info mb-8 p-4 bg-gray-50 rounded-lg">
-            <h3 class="text-lg font-bold text-gold mb-2">PLEASE PAY INTO:</h3>
-            <p class="text-gray-700"><span class="font-bold">Bank Name:</span> Zenith Bank</p>
-            <p class="text-gray-700"><span class="font-bold">Account Name:</span> Adebimpe Aderemi</p>
-            <p class="text-gray-700"><span class="font-bold">Account Number:</span> 1002553295</p>
+        <div class="totals-section">
+            <table class="totals-table">
+                <tbody>
+                    <tr>
+                        <td class="label">Subtotal:</td>
+                        <td class="amount">{{ currency_symbol }} {{ subtotal_formatted }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Discount:</td>
+                        <td class="amount">{{ currency_symbol }} {{ discount_formatted }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">VAT ({{ vat_percentage_display }}):</td>
+                        <td class="amount">{{ currency_symbol }} {{ vat_amount_formatted }}</td>
+                    </tr>
+                    <tr class="font-bold text-lg border-t-2 border-gray-300">
+                        <td class="label text-gold">TOTAL DUE:</td>
+                        <td class="amount text-gold">{{ currency_symbol }} {{ total_price_formatted }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
-        <div class="notes-section p-4 bg-gray-50 rounded-lg">
-            <h3 class="text-lg font-bold text-gold mb-2">NOTES:</h3>
-            <p class="text-gray-500">Thanks for your patronage!</p>
-            <!-- <p class="text-gray-500">[Add any other terms or notes here]</p> -->
+        {% if payment.bank_name %}
+        <div class="payment-info-section">
+            <h3 class="text-gold font-semibold">Payment Information:</h3>
+            <p><span class="font-semibold">Bank:</span> {{ payment.bank_name }}</p>
+            <p><span class="font-semibold">Account Name:</span> {{ payment.account_name }}</p>
+            <p><span class="font-semibold">Account Number:</span> {{ payment.account_number }}</p>
+            {% if payment.payment_terms %}<p class="mt-2">{{ payment.payment_terms }}</p>{% endif %}
+        </div>
+        {% endif %}
+
+        <div class="notes-section">
+            <h3 class="text-gold font-semibold">Notes:</h3>
+            <p>Thanks for your patronage!</p>
+            {% if payment.additional_info %}<p>{{ payment.additional_info }}</p>{% endif %}
         </div>
 
-        <div class="footer mt-8 pt-4 border-t border-gray-300 text-center text-gray-500">
-            <p>ONYX and GOLD Fabrics | Abefe Alaso | 08034343274</p>
+        <div class="footer-section">
+            <p>{{ company.name }} | {{ company.owner }} | {{ company.phone }}</p>
             <p>Thank you for your business!</p>
         </div>
     </div>

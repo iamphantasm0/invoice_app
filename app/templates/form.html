@@ -5,7 +5,7 @@
 </head>
 <body>
     <h1>Create Invoice</h1>
-    <form action="/generate-pdf" method="post" enctype="multipart/form-data">
+    <form id="invoice-form" action="/generate-pdf" method="post" enctype="multipart/form-data">
         <label>Client Name: <input type="text" name="client_name" required></label><br>
         <label>Invoice #: <input type="text" name="invoice_number" required></label><br>
         <label>Due Date: <input type="date" name="due_date" required></label><br>
@@ -34,6 +34,20 @@
             `;
             document.getElementById('items').insertAdjacentHTML('beforeend', itemHTML);
         }
+
+        document.getElementById("invoice-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const response = await fetch("/generate-pdf", {
+    method: "POST",
+    body: formData
+  });
+  const blob = await response.blob();
+  const link = document.createElement("a");
+  link.href = window.URL.createObjectURL(blob);
+  link.download = "invoice.pdf";
+  link.click();
+});
     </script>
 </body>
 </html>

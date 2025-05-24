@@ -1,7 +1,8 @@
 services:
   - type: web
-    name: invoice-generator
+    name: invoice-app
     env: docker
+    branch: master
     plan: free
-    dockerfilePath: ./Dockerfile
+    dockerfilePath: Dockerfile
     healthCheckPath: /

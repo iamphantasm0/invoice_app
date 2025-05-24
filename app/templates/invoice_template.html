@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Template - ONYX and GOLD Fabrics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .invoice-box {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 30px;
+            border: 1px solid #eee;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+        }
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #b9770e; /* Gold-like accent */
+        }
+        .header-section .company-details h1 {
+            color: #17202a; /* Darker (Onyx-like) text for company name */
+            margin-bottom: 5px;
+        }
+        .header-section .invoice-title h2 {
+            color: #b9770e; /* Gold-like accent for "INVOICE" */
+            text-align: right;
+        }
+        .logo-placeholder {
+            width: 100px;
+            height: 100px;
+            background-color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #718096;
+            font-size: 0.875rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .details-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        .details-section div {
+            width: 48%;
+        }
+        .details-section h3 {
+            color: #b9770e; /* Gold-like accent */
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        .items-table th, .items-table td {
+            border: 1px solid #e2e8f0;
+            padding: 10px;
+            text-align: left;
+        }
+        .items-table th {
+            background-color: #f7fafc;
+            color: #4a5568;
+            font-weight: bold;
+        }
+        .items-table td.description {
+            width: 40%;
+        }
+        .items-table td.quantity, .items-table td.unit-price, .items-table td.total {
+            text-align: right;
+        }
+        .totals-section {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 30px;
+        }
+        .totals-section table {
+            width: 40%;
+            border-collapse: collapse;
+        }
+        .totals-section td {
+            padding: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        .totals-section td.label {
+            font-weight: bold;
+            color: #4a5568;
+        }
+        .totals-section td.amount {
+            text-align: right;
+        }
+        .payment-info, .notes-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #f9fafb;
+            border-radius: 8px;
+        }
+        .payment-info h3, .notes-section h3 {
+            color: #b9770e; /* Gold-like accent */
+            margin-top: 0;
+        }
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.875rem;
+            color: #718096;
+        }
+
+        /* Excel compatibility styles */
+        .excel-compatible-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .excel-compatible-table td {
+            padding: 5px;
+            vertical-align: top;
+        }
+        .text-right { text-align: right; }
+        .font-bold { font-weight: bold; }
+        .text-lg { font-size: 1.125rem; }
+        .text-xl { font-size: 1.25rem; }
+        .text-2xl { font-size: 1.5rem; }
+        .text-4xl { font-size: 2.25rem; } /* Larger invoice title */
+        .text-onyx { color: #17202a; } /* Onyx-like color */
+        .text-gold { color: #b9770e; } /* Gold-like color */
+        .border-b-2 { border-bottom-width: 2px; }
+        .border-gold { border-color: #b9770e; }
+        .pb-2 { padding-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .mt-2 { margin-top: 0.5rem; }
+        .p-2 { padding: 0.5rem; }
+        .p-4 { padding: 1rem; }
+        .bg-gray-50 { background-color: #f9fafb; }
+        .bg-gray-100 { background-color: #f7fafc; }
+        .text-gray-700 { color: #4a5568; }
+        .text-gray-500 { color: #718096; }
+        .rounded-lg { border-radius: 0.5rem; }
+        .border { border-width: 1px; }
+        .w-full { width: 100%; }
+
+
+    </style>
+</head>
+<body>
+    <div class="invoice-box">
+        <table class="excel-compatible-table mb-8">
+            <tr>
+                <td>
+                    <div class="logo-placeholder">{% if logo_base64 %}<img src="data:image/png;base64,{{ logo_base64 }}" width="100" />{% endif %}</div>
+                    <h1 class="text-2xl font-bold text-onyx mt-2">ONYX and GOLD Fabrics</h1>
+                    <p class="text-gray-500">Owner: Abefe Alaso</p>
+                    <p class="text-gray-500">08034343274</p>
+                    <!-- <p class="text-gray-500">[Your Company Address]</p>
+                    <p class="text-gray-500">[Your Company Email]</p> -->
+                </td>
+                <td class="text-right">
+                    <h2 class="text-4xl font-bold text-gold">INVOICE</h2>
+                    <p class="text-gray-700 mt-2"><span class="font-bold">Invoice #:</span> {{ invoice_number }}</p>
+                    <p class="text-gray-700"><span class="font-bold">Date:</span>  {{ due_date }}</p>
+                    <!-- <p class="text-gray-700"><span class="font-bold">Due Date:</span> [Specify Due Date]</p> -->
+                </td>
+            </tr>
+        </table>
+
+        <table class="excel-compatible-table mb-8">
+            <tr>
+                <td style="width: 50%;">
+                    <h3 class="text-lg font-bold text-gold border-b-2 border-gold pb-2 mb-2">BILLED TO:</h3>
+                  <p class="font-bold text-gray-700">{{ client_name }}</p>
+                     <!--  <p class="text-gray-500">[Client Contact Name]</p>
+                    <p class="text-gray-500">[Client Address]</p>
+                    <p class="text-gray-500">[Client Phone]</p>
+                    <p class="text-gray-500">[Client Email]</p> -->
+                </td>
+                <td style="width: 50%;">
+                     <h3 class="text-lg font-bold text-gold border-b-2 border-gold pb-2 mb-2">PROJECT/REFERENCE:</h3>
+                     <!-- <p class="text-gray-700">Order #1</p> -->
+                </td>
+            </tr>
+        </table>
+
+        <table class="items-table w-full mb-8">
+            <thead>
+                <tr>
+                    <th class="p-2 bg-gray-100 text-gray-700 font-bold border">DESCRIPTION</th>
+                    <th class="p-2 bg-gray-100 text-gray-700 font-bold border text-right">QUANTITY/UNIT</th>
+                    <th class="p-2 bg-gray-100 text-gray-700 font-bold border text-right">UNIT PRICE (NGN)</th>
+                    <th class="p-2 bg-gray-100 text-gray-700 font-bold border text-right">TOTAL (NGN)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+            <tr>
+                <td  class="p-2 border description">{{ item.description }}</td>
+                <td class="p-2 border quantity text-right">{{ item.quantity }}</td>
+                <td class="p-2 border unit-price text-right">{{ item.unit_price }}</td>
+                <td class="p-2 border total text-right">{{ item.total }}</td>
+            </tr>
+            {% endfor %}
+                <!-- <tr>
+                    <td class="p-2 border description">[Enter item description]</td>
+                    <td class="p-2 border quantity text-right">[Quantity]</td>
+                    <td class="p-2 border unit-price text-right">[0.00]</td>
+                    <td class="p-2 border total text-right">[0.00]</td>
+                </tr> -->
+            </tbody>
+        </table>
+
+        <table class="excel-compatible-table mb-8" style="margin-left: auto; width: 40%;">
+             <tr>
+                <td class="p-2 text-gray-700">Subtotal:</td>
+                <td class="p-2 text-right font-bold text-gray-700"> NGN {{ subtotal }}</td> </tr>
+            <tr>
+                <td class="p-2 text-gray-700">Discount:</td>
+                <td class="p-2 text-right font-bold text-gray-700">NGN {{ discount }}</td>
+            </tr>
+            <tr>
+                <td class="p-2 text-gray-700">Tax (VAT %):</td>
+                <td class="p-2 text-right font-bold text-gray-700">NGN {{ vat_amount }}</td>
+            </tr>
+            <tr>
+                <td class="p-2 text-xl font-bold text-gold">TOTAL DUE:</td>
+                <td class="p-2 text-right text-xl font-bold text-gold"> NGN {{ total_price }}</td> </tr>
+        </table>
+
+        <div class="payment-info mb-8 p-4 bg-gray-50 rounded-lg">
+            <h3 class="text-lg font-bold text-gold mb-2">PLEASE PAY INTO:</h3>
+            <p class="text-gray-700"><span class="font-bold">Bank Name:</span> Zenith Bank</p>
+            <p class="text-gray-700"><span class="font-bold">Account Name:</span> Adebimpe Aderemi</p>
+            <p class="text-gray-700"><span class="font-bold">Account Number:</span> 1002553295</p>
+        </div>
+
+        <div class="notes-section p-4 bg-gray-50 rounded-lg">
+            <h3 class="text-lg font-bold text-gold mb-2">NOTES:</h3>
+            <p class="text-gray-500">Thanks for your patronage!</p>
+            <!-- <p class="text-gray-500">[Add any other terms or notes here]</p> -->
+        </div>
+
+        <div class="footer mt-8 pt-4 border-t border-gray-300 text-center text-gray-500">
+            <p>ONYX and GOLD Fabrics | Abefe Alaso | 08034343274</p>
+            <p>Thank you for your business!</p>
+        </div>
+    </div>
+</body>
+</html>

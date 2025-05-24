@@ -1,7 +1,7 @@
-# Use an official Python runtime as a base image
+# Use official Python slim image
 FROM python:3.12-slim
 
-# Install WeasyPrint dependencies (these are required on Debian/Ubuntu systems)
+# Install dependencies needed for WeasyPrint and your app
 RUN apt-get update && apt-get install -y \
     libpango-1.0-0 \
     libgdk-pixbuf2.0-0 \
@@ -13,18 +13,20 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
-WORKDIR /app
+# Set working directory to root of your project
+WORKDIR /invoice_app
 
-# Copy requirements and install
+# Copy requirements first to leverage Docker cache
 COPY requirements.txt .
+
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy app code
-COPY app /app
+# Copy the entire project into the container
+COPY . .
 
-# Expose the port
+# Expose port 8000
 EXPOSE 8000
 
-# Run the server
+# Run the app using uvicorn pointing to your app.main:app
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

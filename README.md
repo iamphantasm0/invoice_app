@@ -9,15 +9,13 @@ This is a simple FastAPI-powered web application that lets users generate and do
 - Add multiple line items (description, quantity, unit price)
 - Calculates subtotal, VAT, discount, and total due
 - Clean Tailwind-inspired styling
-- Outputs downloadable PDF invoice
+- Outputs downloadable PDF invoice (no new tab)
 - Dockerized and deployable (e.g., Render, Fly.io)
 
-## 🚀 Technologies Used
+## 🚀 Live Demo
 
-- [FastAPI](https://fastapi.tiangolo.com/)
-- [WeasyPrint](https://weasyprint.org/) (for PDF generation)
-- HTML + JS (no frontend framework)
-- Docker (for easy deployment)
+You can try the app here:  
+👉 **[https://invoice-app-7xim.onrender.com/](https://invoice-app-7xim.onrender.com/)**
 
 ## 📦 Usage
 
@@ -38,8 +36,7 @@ If you or your business needs a **more robust version** of this app — such as:
 - Database persistence
 - Online payments integration
 
-👉 Feel free to reach out: **[iamphantasm0@gmail.com](mailto:iamphantasm0@gmail.com)**
-
+👉 Feel free to reach out: **[iamphantasm0@gmail.com](mailto:iamphantasm0@gmail.com)**  
 I'd be happy to help tailor a version that fits your workflow better.
 
 ---

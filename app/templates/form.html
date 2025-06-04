@@ -10,27 +10,28 @@
             line-height: 1.6;
             margin: 0;
             padding: 20px;
-            background-color: #f4f4f4;
+            background-color: #f9f9f9; /* Lighter gray */
             color: #333;
         }
         .container {
-            max-width: 800px;
+            max-width: 850px; /* Slightly wider */
             margin: 20px auto;
-            padding: 25px;
+            padding: 30px; /* More padding */
             background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border-radius: 10px; /* Softer radius */
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08); /* Softer shadow */
         }
         h1 {
             color: #b9770e; /* Gold-like accent */
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            font-weight: 600;
         }
         form label {
             display: block;
             margin-bottom: 8px;
-            font-weight: bold;
-            color: #555;
+            font-weight: 500; /* Medium weight */
+            color: #444; /* Slightly darker label */
         }
         form input[type="text"],
         form input[type="date"],
@@ -38,73 +39,84 @@
         form input[type="email"],
         form input[type="tel"],
         form textarea {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            width: calc(100% - 24px); /* Adjusted for padding */
+            padding: 12px; /* More padding */
+            margin-bottom: 18px; /* More space */
+            border: 1px solid #ccc; /* Softer border */
+            border-radius: 6px; /* Softer radius */
             box-sizing: border-box;
+            transition: border-color 0.3s ease;
         }
-        form input[type="file"] {
-            margin-bottom: 15px;
+        form input:focus, form textarea:focus {
+            border-color: #b9770e; /* Gold focus */
+            outline: none;
         }
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Responsive columns */
+            gap: 25px; /* More gap */
         }
         .form-section {
-            margin-bottom: 20px;
-            padding: 15px;
-            border: 1px solid #eee;
-            border-radius: 5px;
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #e0e0e0; /* Lighter border */
+            border-radius: 8px;
+            background-color: #fdfdfd;
         }
         .form-section h2 {
-            font-size: 1.2em;
+            font-size: 1.3em; /* Slightly larger */
             color: #17202a; /* Onyx-like */
             margin-top: 0;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+            font-weight: 600;
         }
         .items-container .item {
             display: grid;
-            grid-template-columns: 3fr 1fr 1.5fr 0.5fr; /* Description, Qty, Unit Price, Remove button */
-            gap: 10px;
-            align-items: center;
-            padding: 10px 0;
+            grid-template-columns: 3fr 1fr 1.5fr auto; /* Description, Qty, Unit Price, Remove button */
+            gap: 12px;
+            align-items: flex-end; /* Align to bottom for better look with remove button */
+            padding: 12px 0;
             border-bottom: 1px solid #f0f0f0;
         }
         .items-container .item:last-child {
             border-bottom: none;
         }
-        .items-container .item label { /* More specific for item labels */
-            margin-bottom: 0; /* Reset for inline display */
+        .items-container .item label {
+            margin-bottom: 5px;
             font-size: 0.9em;
         }
          .items-container .item input {
-            margin-bottom: 0; /* Reset for inline display */
+            margin-bottom: 0;
         }
         button, .button {
             background-color: #b9770e; /* Gold */
             color: white;
-            padding: 12px 20px;
+            padding: 12px 22px;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.3s ease;
+            font-size: 1.05em; /* Slightly larger */
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.1s ease;
             text-decoration: none;
             display: inline-block;
             margin-top: 10px;
         }
         button:hover, .button:hover {
             background-color: #8c5c0a; /* Darker Gold */
+            transform: translateY(-1px);
+        }
+        button:active {
+            transform: translateY(0px);
         }
         .remove-item-btn {
             background-color: #e74c3c;
-            font-size: 0.8em;
-            padding: 8px 12px;
+            font-size: 0.9em;
+            padding: 10px 15px; /* Adjusted padding */
+            height: 46px; /* Match input height */
+            align-self: flex-end; /* Align with bottom of inputs */
         }
         .remove-item-btn:hover {
             background-color: #c0392b;
@@ -112,7 +124,7 @@
         #error-message, #success-message {
             padding: 15px;
             margin-bottom: 20px;
-            border-radius: 5px;
+            border-radius: 6px;
             text-align: center;
             display: none; /* Hidden by default */
         }
@@ -126,6 +138,54 @@
             color: #155724;
             border: 1px solid #c3e6cb;
         }
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .toggle-switch label {
+            margin-bottom: 0;
+            margin-right: 10px;
+            font-weight: normal; /* Normal weight for toggle labels */
+        }
+        .toggle-switch input[type="checkbox"] {
+            height: 0;
+            width: 0;
+            visibility: hidden;
+        }
+        .toggle-switch .slider {
+            cursor: pointer;
+            width: 40px;
+            height: 20px;
+            background-color: #ccc;
+            display: inline-block;
+            border-radius: 20px;
+            position: relative;
+            transition: background-color 0.3s;
+        }
+        .toggle-switch .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        .toggle-switch input:checked + .slider {
+            background-color: #b9770e; /* Gold */
+        }
+        .toggle-switch input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+        .field-group { margin-bottom: 15px; } /* Group label and input */
+        textarea[readonly] {
+            background-color: #f0f0f0;
+            color: #555;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -134,43 +194,54 @@
         <div id="error-message"></div>
         <div id="success-message"></div>
 
-        <form id="invoice-form" enctype="multipart/form-data">
+        <form id="invoice-form">
             <div class="form-grid">
                 <div class="form-section">
                     <h2>Client Details</h2>
-                    <label for="client_name">Client Name: <span style="color:red;">*</span></label>
-                    <input type="text" id="client_name" name="client_name" required>
-
-                    <label for="client_address">Client Address:</label>
-                    <input type="text" id="client_address" name="client_address">
-
-                    <label for="client_phone">Client Phone:</label>
-                    <input type="tel" id="client_phone" name="client_phone">
-
-                    <label for="client_email">Client Email:</label>
-                    <input type="email" id="client_email" name="client_email">
+                    <div class="field-group">
+                        <label for="client_name">Client Name: <span style="color:red;">*</span></label>
+                        <input type="text" id="client_name" name="client_name" required>
+                    </div>
+                    <div class="field-group">
+                        <label for="client_address">Client Address:</label>
+                        <input type="text" id="client_address" name="client_address">
+                    </div>
+                    <div class="field-group">
+                        <label for="client_phone">Client Phone:</label>
+                        <input type="tel" id="client_phone" name="client_phone">
+                    </div>
+                    <div class="field-group">
+                        <label for="client_email">Client Email:</label>
+                        <input type="email" id="client_email" name="client_email">
+                    </div>
                 </div>
 
                 <div class="form-section">
                     <h2>Invoice Details</h2>
-                    <label for="invoice_number">Invoice #: <span style="color:red;">*</span></label>
-                    <input type="text" id="invoice_number" name="invoice_number" required>
-
-                    <label for="invoice_date">Invoice Date: <span style="color:red;">*</span></label>
-                    <input type="date" id="invoice_date" name="invoice_date" required>
-
-                    <label for="due_date">Due Date: </label>
-                    <input type="date" id="due_date" name="due_date">
-                    
-                    <label for="project_reference">Project/Reference (Optional):</label>
-                    <input type="text" id="project_reference" name="project_reference">
+                    <div class="field-group">
+                        <label for="invoice_number">Invoice #: <span style="color:red;">*</span></label>
+                        <input type="text" id="invoice_number" name="invoice_number" value="{{ auto_invoice_number }}" required>
+                    </div>
+                    <div class="field-group">
+                        <label for="invoice_date">Invoice Date: <span style="color:red;">*</span></label>
+                        <input type="date" id="invoice_date" name="invoice_date" value="{{ today_date }}" required>
+                    </div>
+                    <div class="field-group">
+                        <label for="due_date">Due Date:</label>
+                        <input type="date" id="due_date" name="due_date">
+                    </div>
+                    <div class="field-group">
+                        <label for="project_reference">Project/Reference (Optional):</label>
+                        <input type="text" id="project_reference" name="project_reference">
+                    </div>
                 </div>
             </div>
 
             <div class="form-section">
                 <h2>Items <span style="color:red;">*</span></h2>
                 <div id="items-container">
-                    </div>
+                    <!-- Item rows will be added here by JavaScript -->
+                </div>
                 <button type="button" onclick="addItem()">+ Add Item</button>
             </div>
 
@@ -178,10 +249,20 @@
                 <h2>Financials</h2>
                 <div class="form-grid">
                     <div>
+                        <div class="toggle-switch">
+                            <label for="enable_discount">Enable Discount:</label>
+                            <input type="checkbox" id="enable_discount" onchange="toggleDiscount()">
+                            <span class="slider"></span>
+                        </div>
                         <label for="discount">Discount (NGN):</label>
-                        <input type="number" id="discount" name="discount" step="0.01" value="0.00">
+                        <input type="number" id="discount" name="discount" step="0.01" value="0.00" readonly>
                     </div>
                     <div>
+                        <div class="toggle-switch">
+                            <label for="enable_vat">Enable VAT:</label>
+                            <input type="checkbox" id="enable_vat" onchange="toggleVAT()" checked>
+                            <span class="slider"></span>
+                        </div>
                         <label for="vat_percentage">VAT (%):</label>
                         <input type="number" id="vat_percentage" name="vat_percentage" step="0.01" value="7.50" title="Enter percentage e.g., 7.5 for 7.5%">
                     </div>
@@ -189,9 +270,13 @@
             </div>
             
             <div class="form-section">
-                <h2>Branding</h2>
-                <label for="logo">Company Logo (Optional, PNG/JPG):</label>
-                <input type="file" id="logo" name="logo" accept="image/png, image/jpeg">
+                <h2>Payment Policy</h2>
+                <div class="toggle-switch">
+                    <label for="edit_payment_policy">Edit Policy:</label>
+                    <input type="checkbox" id="edit_payment_policy" onchange="togglePolicyEdit()">
+                    <span class="slider"></span>
+                </div>
+                <textarea id="payment_policy" name="payment_policy" rows="5" readonly>{{ payment_policy_default }}</textarea>
             </div>
 
             <button type="submit" id="submit-button">Generate PDF Invoice</button>
@@ -199,11 +284,18 @@
     </div>
 
     <script>
-        // Set default invoice date to today
         document.addEventListener('DOMContentLoaded', function() {
             const today = new Date().toISOString().split('T')[0];
-            document.getElementById('invoice_date').value = today;
+            if (!document.getElementById('invoice_date').value) {
+                 document.getElementById('invoice_date').value = today;
+            }
+            if (!document.getElementById('invoice_number').value && "{{ auto_invoice_number }}") {
+                document.getElementById('invoice_number').value = "{{ auto_invoice_number }}";
+            }
             addItem(); // Add one item row by default
+            toggleVAT(); // Initialize VAT field based on checkbox
+            toggleDiscount(); // Initialize Discount field
+            togglePolicyEdit(); // Initialize policy field
         });
 
         let itemIdCounter = 0;
@@ -221,11 +313,11 @@
                 </div>
                 <div>
                     <label for="item_quantity_${itemIdCounter}">Quantity: <span style="color:red;">*</span></label>
-                    <input type="number" name="item_quantity" id="item_quantity_${itemIdCounter}" step="0.01" placeholder="e.g., 1 or 1.5" required>
+                    <input type="number" name="item_quantity" id="item_quantity_${itemIdCounter}" step="any" placeholder="e.g., 1" required value="1">
                 </div>
                 <div>
                     <label for="item_unit_price_${itemIdCounter}">Unit Price (NGN): <span style="color:red;">*</span></label>
-                    <input type="number" name="item_unit_price" id="item_unit_price_${itemIdCounter}" step="0.01" placeholder="e.g., 1500.00" required>
+                    <input type="number" name="item_unit_price" id="item_unit_price_${itemIdCounter}" step="0.01" placeholder="e.g., 1500.00" required value="0.00">
                 </div>
                 <button type="button" class="remove-item-btn" onclick="removeItem('item-${itemIdCounter}')">Remove</button>
             `;
@@ -235,13 +327,62 @@
         function removeItem(itemId) {
             const itemToRemove = document.getElementById(itemId);
             if (itemToRemove) {
-                // Prevent removing the last item if you want to enforce at least one item
-                // const itemsContainer = document.getElementById('items-container');
-                // if (itemsContainer.children.length > 1) {
-                itemToRemove.remove();
-                // } else {
-                //     alert("At least one item is required.");
-                // }
+                const itemsContainer = document.getElementById('items-container');
+                if (itemsContainer.children.length > 1) {
+                    itemToRemove.remove();
+                } else {
+                    // Clear values of the last item instead of removing it, or alert
+                    const inputs = itemToRemove.querySelectorAll('input');
+                    inputs.forEach(input => input.value = (input.type === 'number' ? '0' : ''));
+                    inputs[0].focus(); // Focus on description of the cleared item
+                    // alert("At least one item is required. Clear fields if not needed.");
+                }
+            }
+        }
+
+        function togglePolicyEdit() {
+            const policyTextarea = document.getElementById('payment_policy');
+            const editToggle = document.getElementById('edit_payment_policy');
+            policyTextarea.readOnly = !editToggle.checked;
+            if(editToggle.checked) {
+                policyTextarea.style.backgroundColor = '#fff';
+                policyTextarea.style.cursor = 'text';
+            } else {
+                policyTextarea.style.backgroundColor = '#f0f0f0';
+                policyTextarea.style.cursor = 'not-allowed';
+            }
+        }
+
+        function toggleDiscount() {
+            const discountInput = document.getElementById('discount');
+            const enableDiscountToggle = document.getElementById('enable_discount');
+            if (enableDiscountToggle.checked) {
+                discountInput.readOnly = false;
+                discountInput.style.backgroundColor = '#fff';
+                discountInput.style.cursor = 'text';
+            } else {
+                discountInput.readOnly = true;
+                discountInput.value = "0.00";
+                discountInput.style.backgroundColor = '#f0f0f0';
+                discountInput.style.cursor = 'not-allowed';
+            }
+        }
+
+        function toggleVAT() {
+            const vatInput = document.getElementById('vat_percentage');
+            const enableVATToggle = document.getElementById('enable_vat');
+            if (enableVATToggle.checked) {
+                vatInput.readOnly = false;
+                if (vatInput.value === "0.00" || vatInput.value === "0") { // Set to default only if it was 0
+                    vatInput.value = "7.50";
+                }
+                vatInput.style.backgroundColor = '#fff';
+                vatInput.style.cursor = 'text';
+            } else {
+                vatInput.readOnly = true;
+                vatInput.value = "0.00";
+                vatInput.style.backgroundColor = '#f0f0f0';
+                vatInput.style.cursor = 'not-allowed';
             }
         }
 
@@ -258,19 +399,35 @@
             errorMessageDiv.textContent = '';
             successMessageDiv.style.display = 'none';
 
-
             const formData = new FormData(invoiceForm);
             
-            // Basic check for at least one item (FastAPI backend also validates this)
+            // Ensure discount and VAT are 0 if toggles are off
+            if (!document.getElementById('enable_discount').checked) {
+                formData.set('discount', '0.00');
+            }
+            if (!document.getElementById('enable_vat').checked) {
+                formData.set('vat_percentage', '0.00');
+            }
+            
             const itemDescriptions = formData.getAll('item_description');
-            if (itemDescriptions.length === 0 || itemDescriptions.every(desc => !desc.trim())) {
-                 errorMessageDiv.textContent = 'Please add at least one item with a description.';
-                 errorMessageDiv.style.display = 'block';
-                 submitButton.disabled = false;
-                 submitButton.textContent = 'Generate PDF Invoice';
-                 return;
+            let validItems = false;
+            for (let i = 0; i < itemDescriptions.length; i++) {
+                if (formData.get(`item_description`)[i] && formData.get(`item_description`)[i].trim() !== "") {
+                     // Check if corresponding quantity and price are also filled
+                    if (formData.getAll('item_quantity')[i] && formData.getAll('item_unit_price')[i]){
+                         validItems = true;
+                         break;
+                    }
+                }
             }
 
+            if (!validItems) {
+                errorMessageDiv.textContent = 'Please add at least one complete item (description, quantity, and unit price).';
+                errorMessageDiv.style.display = 'block';
+                submitButton.disabled = false;
+                submitButton.textContent = 'Generate PDF Invoice';
+                return;
+            }
 
             try {
                 const response = await fetch('/generate-pdf', {
@@ -279,7 +436,7 @@
                 });
 
                 if (!response.ok) {
-                    const errorData = await response.json(); // FastAPI returns JSON error
+                    const errorData = await response.json().catch(() => ({ detail: `HTTP error! status: ${response.status}` }));
                     throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
                 }
 
@@ -291,18 +448,23 @@
                 const invoiceNumber = formData.get('invoice_number').replace(/\s+/g, '_') || 'invoice';
                 link.download = `invoice_${invoiceNumber}_${clientName}.pdf`;
                 
-                document.body.appendChild(link); // Required for Firefox
+                document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                window.URL.revokeObjectURL(link.href); // Clean up
+                window.URL.revokeObjectURL(link.href);
 
                 successMessageDiv.textContent = 'PDF generated successfully and download started!';
                 successMessageDiv.style.display = 'block';
-                // Optionally reset the form:
-                // invoiceForm.reset();
+                // invoiceForm.reset(); // Uncomment to reset form
                 // document.getElementById('invoice_date').value = new Date().toISOString().split('T')[0];
-                // document.getElementById('items-container').innerHTML = ''; // Clear items
-                // addItem(); // Add one default item row back
+                // document.getElementById('invoice_number').value = `INV-${Math.random().toString(36).substr(2, 6).toUpperCase()}`; // Generate new INV#
+                // document.getElementById('items-container').innerHTML = '';
+                // addItem();
+                // toggleVAT(); 
+                // toggleDiscount();
+                // togglePolicyEdit();
+                // document.getElementById('payment_policy').value = "{{ payment_policy_default }}";
+
 
             } catch (error) {
                 console.error('Error generating PDF:', error);

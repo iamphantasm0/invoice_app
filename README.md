@@ -5,7 +5,6 @@ This is a simple FastAPI-powered web application that lets users generate and do
 ## ✨ Features
 
 - Fast, browser-based invoice form
-- Upload logo and embed it in the PDF
 - Add multiple line items (description, quantity, unit price)
 - Calculates subtotal, VAT, discount, and total due
 - Clean Tailwind-inspired styling

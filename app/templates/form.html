@@ -10,19 +10,19 @@
             line-height: 1.6;
             margin: 0;
             padding: 20px;
-            background-color: #f9f9f9; /* Lighter gray */
+            background-color: #f9f9f9;
             color: #333;
         }
         .container {
-            max-width: 850px; /* Slightly wider */
+            max-width: 850px;
             margin: 20px auto;
-            padding: 30px; /* More padding */
+            padding: 30px;
             background-color: #fff;
-            border-radius: 10px; /* Softer radius */
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08); /* Softer shadow */
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
         h1 {
-            color: #b9770e; /* Gold-like accent */
+            color: #b9770e;
             text-align: center;
             margin-bottom: 25px;
             font-weight: 600;
@@ -30,8 +30,8 @@
         form label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 500; /* Medium weight */
-            color: #444; /* Slightly darker label */
+            font-weight: 500;
+            color: #444;
         }
         form input[type="text"],
         form input[type="date"],
@@ -39,33 +39,33 @@
         form input[type="email"],
         form input[type="tel"],
         form textarea {
-            width: calc(100% - 24px); /* Adjusted for padding */
-            padding: 12px; /* More padding */
-            margin-bottom: 18px; /* More space */
-            border: 1px solid #ccc; /* Softer border */
-            border-radius: 6px; /* Softer radius */
+            width: calc(100% - 24px);
+            padding: 12px;
+            margin-bottom: 18px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
             box-sizing: border-box;
             transition: border-color 0.3s ease;
         }
         form input:focus, form textarea:focus {
-            border-color: #b9770e; /* Gold focus */
+            border-color: #b9770e;
             outline: none;
         }
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Responsive columns */
-            gap: 25px; /* More gap */
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
         }
         .form-section {
             margin-bottom: 25px;
             padding: 20px;
-            border: 1px solid #e0e0e0; /* Lighter border */
+            border: 1px solid #e0e0e0;
             border-radius: 8px;
             background-color: #fdfdfd;
         }
         .form-section h2 {
-            font-size: 1.3em; /* Slightly larger */
-            color: #17202a; /* Onyx-like */
+            font-size: 1.3em;
+            color: #17202a;
             margin-top: 0;
             border-bottom: 1px solid #e0e0e0;
             padding-bottom: 12px;
@@ -74,9 +74,9 @@
         }
         .items-container .item {
             display: grid;
-            grid-template-columns: 3fr 1fr 1.5fr auto; /* Description, Qty, Unit Price, Remove button */
+            grid-template-columns: 3fr 1fr 1.5fr auto;
             gap: 12px;
-            align-items: flex-end; /* Align to bottom for better look with remove button */
+            align-items: flex-end;
             padding: 12px 0;
             border-bottom: 1px solid #f0f0f0;
         }
@@ -91,13 +91,13 @@
             margin-bottom: 0;
         }
         button, .button {
-            background-color: #b9770e; /* Gold */
+            background-color: #b9770e;
             color: white;
             padding: 12px 22px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 1.05em; /* Slightly larger */
+            font-size: 1.05em;
             font-weight: 500;
             transition: background-color 0.3s ease, transform 0.1s ease;
             text-decoration: none;
@@ -105,7 +105,7 @@
             margin-top: 10px;
         }
         button:hover, .button:hover {
-            background-color: #8c5c0a; /* Darker Gold */
+            background-color: #8c5c0a;
             transform: translateY(-1px);
         }
         button:active {
@@ -114,9 +114,10 @@
         .remove-item-btn {
             background-color: #e74c3c;
             font-size: 0.9em;
-            padding: 10px 15px; /* Adjusted padding */
-            height: 46px; /* Match input height */
-            align-self: flex-end; /* Align with bottom of inputs */
+            padding: 10px 15px;
+            height: 46px; /* Approx match input height with padding */
+            box-sizing: border-box;
+            align-self: flex-end;
         }
         .remove-item-btn:hover {
             background-color: #c0392b;
@@ -126,7 +127,7 @@
             margin-bottom: 20px;
             border-radius: 6px;
             text-align: center;
-            display: none; /* Hidden by default */
+            display: none;
         }
         #error-message {
             background-color: #f8d7da;
@@ -143,17 +144,19 @@
             align-items: center;
             margin-bottom: 15px;
         }
-        .toggle-switch label {
+        .toggle-switch label { /* This label is for the text next to the switch */
             margin-bottom: 0;
             margin-right: 10px;
-            font-weight: normal; /* Normal weight for toggle labels */
+            font-weight: normal;
+            cursor: pointer; /* Make label clickable to toggle checkbox */
         }
-        .toggle-switch input[type="checkbox"] {
+        .toggle-switch input[type="checkbox"] { /* The actual checkbox */
             height: 0;
             width: 0;
             visibility: hidden;
+            position: absolute; /* Take out of flow */
         }
-        .toggle-switch .slider {
+        .toggle-switch .slider { /* This is the visual slider part */
             cursor: pointer;
             width: 40px;
             height: 20px;
@@ -163,7 +166,7 @@
             position: relative;
             transition: background-color 0.3s;
         }
-        .toggle-switch .slider:before {
+        .toggle-switch .slider:before { /* The sliding knob */
             position: absolute;
             content: "";
             height: 16px;
@@ -174,17 +177,22 @@
             border-radius: 50%;
             transition: 0.3s;
         }
-        .toggle-switch input:checked + .slider {
-            background-color: #b9770e; /* Gold */
+        /* Styling when checkbox is checked */
+        .toggle-switch input[type="checkbox"]:checked + .slider {
+            background-color: #b9770e;
         }
-        .toggle-switch input:checked + .slider:before {
+        .toggle-switch input[type="checkbox"]:checked + .slider:before {
             transform: translateX(20px);
         }
-        .field-group { margin-bottom: 15px; } /* Group label and input */
+        .field-group { margin-bottom: 18px; }
         textarea[readonly] {
-            background-color: #f0f0f0;
-            color: #555;
+            background-color: #e9ecef; 
+            color: #495057;
             cursor: not-allowed;
+        }
+        input[readonly] {
+             background-color: #e9ecef;
+             cursor: not-allowed;
         }
     </style>
 </head>
@@ -250,18 +258,20 @@
                 <div class="form-grid">
                     <div>
                         <div class="toggle-switch">
-                            <label for="enable_discount">Enable Discount:</label>
-                            <input type="checkbox" id="enable_discount" onchange="toggleDiscount()">
-                            <span class="slider"></span>
+                            <label for="enable_discount">Enable Discount:
+                                <input type="checkbox" id="enable_discount"> 
+                                <span class="slider"></span>
+                            </label>
                         </div>
-                        <label for="discount">Discount (NGN):</label>
+                        <label for="discount">Discount (NGN):</label> 
                         <input type="number" id="discount" name="discount" step="0.01" value="0.00" readonly>
                     </div>
                     <div>
                         <div class="toggle-switch">
-                            <label for="enable_vat">Enable VAT:</label>
-                            <input type="checkbox" id="enable_vat" onchange="toggleVAT()" checked>
-                            <span class="slider"></span>
+                            <label for="enable_vat">Enable VAT:
+                                <input type="checkbox" id="enable_vat"> <!-- 'checked' attribute removed -->
+                                <span class="slider"></span>
+                            </label>
                         </div>
                         <label for="vat_percentage">VAT (%):</label>
                         <input type="number" id="vat_percentage" name="vat_percentage" step="0.01" value="7.50" title="Enter percentage e.g., 7.5 for 7.5%">
@@ -272,9 +282,10 @@
             <div class="form-section">
                 <h2>Payment Policy</h2>
                 <div class="toggle-switch">
-                    <label for="edit_payment_policy">Edit Policy:</label>
-                    <input type="checkbox" id="edit_payment_policy" onchange="togglePolicyEdit()">
-                    <span class="slider"></span>
+                     <label for="edit_payment_policy">Edit Policy:
+                        <input type="checkbox" id="edit_payment_policy"> 
+                        <span class="slider"></span>
+                    </label>
                 </div>
                 <textarea id="payment_policy" name="payment_policy" rows="5" readonly>{{ payment_policy_default }}</textarea>
             </div>
@@ -284,18 +295,57 @@
     </div>
 
     <script>
+        console.log("Form script loaded.");
+
         document.addEventListener('DOMContentLoaded', function() {
-            const today = new Date().toISOString().split('T')[0];
-            if (!document.getElementById('invoice_date').value) {
-                 document.getElementById('invoice_date').value = today;
+            console.log("DOMContentLoaded event fired.");
+            
+            const invoiceDateInput = document.getElementById('invoice_date');
+            if (invoiceDateInput && !invoiceDateInput.value && "{{ today_date }}") {
+                 invoiceDateInput.value = "{{ today_date }}";
+                 console.log("Invoice date set to today.");
             }
-            if (!document.getElementById('invoice_number').value && "{{ auto_invoice_number }}") {
-                document.getElementById('invoice_number').value = "{{ auto_invoice_number }}";
+            const invoiceNumberInput = document.getElementById('invoice_number');
+            if (invoiceNumberInput && !invoiceNumberInput.value && "{{ auto_invoice_number }}") {
+                invoiceNumberInput.value = "{{ auto_invoice_number }}";
+                console.log("Invoice number pre-filled.");
             }
-            addItem(); // Add one item row by default
-            toggleVAT(); // Initialize VAT field based on checkbox
-            toggleDiscount(); // Initialize Discount field
-            togglePolicyEdit(); // Initialize policy field
+
+            addItem(); 
+            console.log("Initial item added.");
+
+            // Setup Event Listeners for Toggles
+            const enableDiscountCheckbox = document.getElementById('enable_discount');
+            if (enableDiscountCheckbox) {
+                enableDiscountCheckbox.addEventListener('change', toggleDiscount);
+                console.log("Event listener added for enable_discount.");
+            } else {
+                console.error("enable_discount checkbox not found for event listener.");
+            }
+            
+            const enableVATCheckbox = document.getElementById('enable_vat');
+            if (enableVATCheckbox) {
+                enableVATCheckbox.addEventListener('change', toggleVAT);
+                console.log("Event listener added for enable_vat.");
+            } else {
+                console.error("enable_vat checkbox not found for event listener.");
+            }
+
+            const editPaymentPolicyCheckbox = document.getElementById('edit_payment_policy');
+            if (editPaymentPolicyCheckbox) {
+                editPaymentPolicyCheckbox.addEventListener('change', togglePolicyEdit);
+                console.log("Event listener added for edit_payment_policy.");
+            } else {
+                console.error("edit_payment_policy checkbox not found for event listener.");
+            }
+            
+            // Initialize toggle states after listeners are attached
+            // These calls will now correctly reflect the default unchecked state for VAT
+            if (enableVATCheckbox) toggleVAT(); 
+            if (enableDiscountCheckbox) toggleDiscount(); 
+            if (editPaymentPolicyCheckbox) togglePolicyEdit();
+            
+            console.log("Initial toggle states set and event listeners attached.");
         });
 
         let itemIdCounter = 0;
@@ -303,6 +353,10 @@
         function addItem() {
             itemIdCounter++;
             const itemsContainer = document.getElementById('items-container');
+            if (!itemsContainer) {
+                console.error("items-container not found!");
+                return;
+            }
             const itemDiv = document.createElement('div');
             itemDiv.classList.add('item');
             itemDiv.id = `item-${itemIdCounter}`;
@@ -322,67 +376,99 @@
                 <button type="button" class="remove-item-btn" onclick="removeItem('item-${itemIdCounter}')">Remove</button>
             `;
             itemsContainer.appendChild(itemDiv);
+            console.log(`Added item: item-${itemIdCounter}`);
+            const firstInput = itemDiv.querySelector('input[name="item_description"]');
+            if (firstInput) {
+                firstInput.focus();
+            }
         }
 
         function removeItem(itemId) {
+            console.log(`Attempting to remove item: ${itemId}`);
             const itemToRemove = document.getElementById(itemId);
             if (itemToRemove) {
                 const itemsContainer = document.getElementById('items-container');
                 if (itemsContainer.children.length > 1) {
                     itemToRemove.remove();
+                    console.log(`Item ${itemId} removed.`);
                 } else {
-                    // Clear values of the last item instead of removing it, or alert
+                    console.log(`Cannot remove last item. Clearing values for ${itemId}.`);
                     const inputs = itemToRemove.querySelectorAll('input');
-                    inputs.forEach(input => input.value = (input.type === 'number' ? '0' : ''));
-                    inputs[0].focus(); // Focus on description of the cleared item
-                    // alert("At least one item is required. Clear fields if not needed.");
+                    inputs.forEach(input => {
+                        if (input.type === 'number') input.value = (input.name === 'item_quantity' ? '1' : '0.00');
+                        else input.value = '';
+                    });
+                    const firstInput = itemToRemove.querySelector('input[name="item_description"]');
+                     if (firstInput) {
+                        firstInput.focus();
+                    }
                 }
+            } else {
+                console.error(`Item ${itemId} not found for removal.`);
+            }
+        }
+
+        function setFieldReadOnly(field, isReadOnly) {
+            if (!field) {
+                console.error("setFieldReadOnly: field is null or undefined. ID:", field ? field.id : "N/A");
+                return;
+            }
+            field.readOnly = isReadOnly;
+            if (isReadOnly) {
+                field.style.backgroundColor = '#e9ecef';
+                field.style.cursor = 'not-allowed';
+            } else {
+                field.style.backgroundColor = '#fff';
+                field.style.cursor = 'text';
             }
         }
 
         function togglePolicyEdit() {
+            console.log("togglePolicyEdit called."); 
             const policyTextarea = document.getElementById('payment_policy');
             const editToggle = document.getElementById('edit_payment_policy');
-            policyTextarea.readOnly = !editToggle.checked;
-            if(editToggle.checked) {
-                policyTextarea.style.backgroundColor = '#fff';
-                policyTextarea.style.cursor = 'text';
-            } else {
-                policyTextarea.style.backgroundColor = '#f0f0f0';
-                policyTextarea.style.cursor = 'not-allowed';
+            if (!policyTextarea || !editToggle) {
+                console.error("Payment policy textarea or toggle checkbox not found.");
+                return;
             }
+            console.log(`Edit Policy checkbox ID: ${editToggle.id}, checked: ${editToggle.checked}`);
+            setFieldReadOnly(policyTextarea, !editToggle.checked);
         }
 
         function toggleDiscount() {
+            console.log("toggleDiscount called."); 
             const discountInput = document.getElementById('discount');
             const enableDiscountToggle = document.getElementById('enable_discount');
-            if (enableDiscountToggle.checked) {
-                discountInput.readOnly = false;
-                discountInput.style.backgroundColor = '#fff';
-                discountInput.style.cursor = 'text';
-            } else {
-                discountInput.readOnly = true;
+             if (!discountInput || !enableDiscountToggle) {
+                console.error("Discount input or toggle checkbox not found.");
+                return;
+            }
+            console.log(`Enable Discount checkbox ID: ${enableDiscountToggle.id}, checked: ${enableDiscountToggle.checked}`);
+            setFieldReadOnly(discountInput, !enableDiscountToggle.checked);
+            if (!enableDiscountToggle.checked) {
                 discountInput.value = "0.00";
-                discountInput.style.backgroundColor = '#f0f0f0';
-                discountInput.style.cursor = 'not-allowed';
+                console.log("Discount input set to 0.00");
             }
         }
 
         function toggleVAT() {
+            console.log("toggleVAT called."); 
             const vatInput = document.getElementById('vat_percentage');
             const enableVATToggle = document.getElementById('enable_vat');
+            if (!vatInput || !enableVATToggle) {
+                console.error("VAT input or toggle checkbox not found.");
+                return;
+            }
+            console.log(`Enable VAT checkbox ID: ${enableVATToggle.id}, checked: ${enableVATToggle.checked}`);
+            setFieldReadOnly(vatInput, !enableVATToggle.checked);
             if (enableVATToggle.checked) {
-                vatInput.readOnly = false;
-                if (vatInput.value === "0.00" || vatInput.value === "0") { // Set to default only if it was 0
+                if (vatInput.value === "0.00" || vatInput.value === "0" || vatInput.value === "") {
                     vatInput.value = "7.50";
+                    console.log("VAT input set to 7.50");
                 }
-                vatInput.style.backgroundColor = '#fff';
-                vatInput.style.cursor = 'text';
             } else {
-                vatInput.readOnly = true;
                 vatInput.value = "0.00";
-                vatInput.style.backgroundColor = '#f0f0f0';
-                vatInput.style.cursor = 'not-allowed';
+                console.log("VAT input set to 0.00");
             }
         }
 
@@ -391,90 +477,122 @@
         const errorMessageDiv = document.getElementById('error-message');
         const successMessageDiv = document.getElementById('success-message');
 
-        invoiceForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            submitButton.disabled = true;
-            submitButton.textContent = 'Generating...';
-            errorMessageDiv.style.display = 'none';
-            errorMessageDiv.textContent = '';
-            successMessageDiv.style.display = 'none';
+        if (invoiceForm) {
+            invoiceForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                console.log("Form submission initiated.");
 
-            const formData = new FormData(invoiceForm);
-            
-            // Ensure discount and VAT are 0 if toggles are off
-            if (!document.getElementById('enable_discount').checked) {
-                formData.set('discount', '0.00');
-            }
-            if (!document.getElementById('enable_vat').checked) {
-                formData.set('vat_percentage', '0.00');
-            }
-            
-            const itemDescriptions = formData.getAll('item_description');
-            let validItems = false;
-            for (let i = 0; i < itemDescriptions.length; i++) {
-                if (formData.get(`item_description`)[i] && formData.get(`item_description`)[i].trim() !== "") {
-                     // Check if corresponding quantity and price are also filled
-                    if (formData.getAll('item_quantity')[i] && formData.getAll('item_unit_price')[i]){
-                         validItems = true;
-                         break;
+                if(submitButton) {
+                    submitButton.disabled = true;
+                    submitButton.textContent = 'Generating...';
+                }
+                if(errorMessageDiv) {
+                    errorMessageDiv.style.display = 'none';
+                    errorMessageDiv.textContent = '';
+                }
+                if(successMessageDiv) successMessageDiv.style.display = 'none';
+
+
+                const formData = new FormData(invoiceForm);
+                
+                const enableDiscountCheckbox = document.getElementById('enable_discount');
+                const enableVATCheckbox = document.getElementById('enable_vat');
+
+                if (enableDiscountCheckbox && !enableDiscountCheckbox.checked) {
+                    formData.set('discount', '0.00'); 
+                    console.log("Form data: discount forced to 0.00");
+                }
+                if (enableVATCheckbox && !enableVATCheckbox.checked) {
+                    formData.set('vat_percentage', '0.00');
+                    console.log("Form data: vat_percentage forced to 0.00");
+                }
+                
+                const itemDescriptions = formData.getAll('item_description');
+                const itemQuantities = formData.getAll('item_quantity');
+                const itemUnitPrices = formData.getAll('item_unit_price');
+                let hasAtLeastOneCompleteItem = false;
+
+                for (let i = 0; i < itemDescriptions.length; i++) {
+                    const desc = itemDescriptions[i] ? itemDescriptions[i].trim() : "";
+                    const qty = itemQuantities[i] ? parseFloat(itemQuantities[i]) : NaN;
+                    const price = itemUnitPrices[i] ? parseFloat(itemUnitPrices[i]) : NaN;
+
+                    if (desc !== "" && !isNaN(qty) && qty > 0 && !isNaN(price)) {
+                        hasAtLeastOneCompleteItem = true;
+                        break;
                     }
                 }
-            }
 
-            if (!validItems) {
-                errorMessageDiv.textContent = 'Please add at least one complete item (description, quantity, and unit price).';
-                errorMessageDiv.style.display = 'block';
-                submitButton.disabled = false;
-                submitButton.textContent = 'Generate PDF Invoice';
-                return;
-            }
-
-            try {
-                const response = await fetch('/generate-pdf', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({ detail: `HTTP error! status: ${response.status}` }));
-                    throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
+                if (!hasAtLeastOneCompleteItem) {
+                    console.log("Validation failed: No complete item.");
+                    if(errorMessageDiv) {
+                        errorMessageDiv.textContent = 'Please add at least one complete item (description, valid quantity > 0, and unit price).';
+                        errorMessageDiv.style.display = 'block';
+                    }
+                    if(submitButton) {
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Generate PDF Invoice';
+                    }
+                    return;
                 }
+                console.log("Client-side validation passed. Submitting form data.");
 
-                const blob = await response.blob();
-                const link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blob);
-                
-                const clientName = formData.get('client_name').replace(/\s+/g, '_') || 'client';
-                const invoiceNumber = formData.get('invoice_number').replace(/\s+/g, '_') || 'invoice';
-                link.download = `invoice_${invoiceNumber}_${clientName}.pdf`;
-                
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                window.URL.revokeObjectURL(link.href);
+                try {
+                    const response = await fetch('/generate-pdf', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    console.log(`Response status: ${response.status}`);
 
-                successMessageDiv.textContent = 'PDF generated successfully and download started!';
-                successMessageDiv.style.display = 'block';
-                // invoiceForm.reset(); // Uncomment to reset form
-                // document.getElementById('invoice_date').value = new Date().toISOString().split('T')[0];
-                // document.getElementById('invoice_number').value = `INV-${Math.random().toString(36).substr(2, 6).toUpperCase()}`; // Generate new INV#
-                // document.getElementById('items-container').innerHTML = '';
-                // addItem();
-                // toggleVAT(); 
-                // toggleDiscount();
-                // togglePolicyEdit();
-                // document.getElementById('payment_policy').value = "{{ payment_policy_default }}";
+                    if (!response.ok) {
+                        let errorDetail = `HTTP error! status: ${response.status} - ${response.statusText}`;
+                        try {
+                            const errorData = await response.json();
+                            errorDetail = errorData.detail || errorDetail;
+                            console.error("Server error (JSON):", errorData);
+                        } catch (jsonError) {
+                            const textError = await response.text();
+                            if (textError) errorDetail = textError.substring(0, 300);
+                            console.error("Server error (Non-JSON):", textError);
+                        }
+                        throw new Error(errorDetail);
+                    }
 
+                    const blob = await response.blob();
+                    const link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    
+                    const clientName = formData.get('client_name').replace(/\s+/g, '_') || 'client';
+                    const invoiceNumber = formData.get('invoice_number').replace(/\s+/g, '_') || 'invoice';
+                    link.download = `invoice_${invoiceNumber}_${clientName}.pdf`;
+                    
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(link.href);
+                    console.log("PDF download initiated.");
 
-            } catch (error) {
-                console.error('Error generating PDF:', error);
-                errorMessageDiv.textContent = `Error: ${error.message}`;
-                errorMessageDiv.style.display = 'block';
-            } finally {
-                submitButton.disabled = false;
-                submitButton.textContent = 'Generate PDF Invoice';
-            }
-        });
+                    if(successMessageDiv) {
+                        successMessageDiv.textContent = 'PDF generated successfully and download started!';
+                        successMessageDiv.style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error('Error in form submission or PDF generation:', error);
+                    if(errorMessageDiv) {
+                        errorMessageDiv.textContent = `Error: ${error.message}`;
+                        errorMessageDiv.style.display = 'block';
+                    }
+                } finally {
+                    if(submitButton) {
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Generate PDF Invoice';
+                    }
+                    console.log("Form submission process ended.");
+                }
+            });
+        } else {
+            console.error("Invoice form element not found!");
+        }
     </script>
 </body>
 </html>

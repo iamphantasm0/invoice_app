@@ -39,14 +39,14 @@ COMPANY_DETAILS = {
     "name": "ONYX and GOLD Fabrics",
     "owner": "Abefe Alaso",
     "phone": "08034343274",
-    "address": "123 Fabric Lane, Textile City, NG", # Added example address
-    "email": "info@onyxandgold.com", # Added example email
-    "website": "www.onyxandgold.com", # Added example website
+    # "address": "123 Fabric Lane, Textile City, NG", # Added example address
+    # "email": "info@onyxandgold.com", # Added example email
+    # "website": "www.onyxandgold.com", # Added example website
     "logo_base64": PLACEHOLDER_LOGO_BASE64
 }
 
 DEFAULT_PAYMENT_POLICY = (
-    "PAYMENT POLICY: 80% Upfront and FULL PAYMENT TO BE COMPLETED BEFORE EVENT DATE.\n"
+    "PAYMENT POLICY: 75% Upfront and FULL PAYMENT TO BE COMPLETED BEFORE EVENT DATE.\n"
     "Note: Only financial commitment secures date.\n"
     "Note: A deposit is an agreement to our ‘PAYMENT POLICY’."
 )

@@ -11,13 +11,11 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from weasyprint import HTML # type: ignore
 import uvicorn
+from app.config import COMPANY_DETAILS, CURRENCY_SYMBOL, DEFAULT_PAYMENT_POLICY, PAYMENT_DETAILS, STATIC_DIR, TEMPLATES_DIR
 
 app = FastAPI(title="Invoice Generator API", version="1.3.0") # Incremented version
 
-# --- Configuration ---
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
-STATIC_DIR = os.path.join(BASE_DIR, "static")
+
 
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
@@ -25,41 +23,6 @@ if not os.path.exists(STATIC_DIR):
     os.makedirs(STATIC_DIR, exist_ok=True)
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
-# Placeholder Base64 encoded image (e.g., a simple 1x1 transparent pixel or your actual logo)
-# You should replace this with your actual logo's base64 string
-# To get base64 of your logo:
-# 1. Online tool: Search "image to base64"
-# 2. Python:
-#    with open("path_to_your_logo.png", "rb") as image_file:
-#        encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
-#    print(encoded_string)
-PLACEHOLDER_LOGO_BASE64 = "iVBORw0KGgoAAAANSUhEUgAAAJYAAABkCAQAAABkASRIAAAAxUlEQVR42u3PMQEAAAgEoDe50yLg0g7g7A4BCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIKgA/gBNr0AARGlZMAAAAAASUVORK5CYII=" # Example: A large transparent PNG
-
-COMPANY_DETAILS = {
-    "name": "ONYX and GOLD Fabrics",
-    "owner": "Abefe Alaso",
-    "phone": "08034343274",
-    # "address": "123 Fabric Lane, Textile City, NG", # Added example address
-    # "email": "info@onyxandgold.com", # Added example email
-    # "website": "www.onyxandgold.com", # Added example website
-    "logo_base64": PLACEHOLDER_LOGO_BASE64
-}
-
-DEFAULT_PAYMENT_POLICY = (
-    "PAYMENT POLICY: 75% Upfront and FULL PAYMENT TO BE COMPLETED BEFORE EVENT DATE.\n"
-    "Note: Only financial commitment secures date.\n"
-    "Note: A deposit is an agreement to our ‘PAYMENT POLICY’."
-)
-
-PAYMENT_DETAILS = {
-    "bank_name": "Zenith Bank PLC",
-    "account_name": "ONYX AND GOLD FABRICS (Adebimpe Aderemi)",
-    "account_number": "1002553295",
-    # "payment_terms": DEFAULT_PAYMENT_POLICY, # This will now come from the form
-    "additional_info": "Thank you for your prompt payment." # General thank you
-}
-
-CURRENCY_SYMBOL = "NGN"
 
 @app.get("/", response_class=HTMLResponse)
 async def invoice_form(request: Request):
@@ -104,7 +67,7 @@ async def generate_pdf(
     if not valid_items_data:
         raise HTTPException(status_code=400, detail="At least one complete item (description, quantity, price) must be added.")
 
-    logo_base64 = COMPANY_DETAILS.get("logo_base64", "")
+    logo_base64 = getattr(COMPANY_DETAILS, "logo_base64", "") if hasattr(COMPANY_DETAILS, "logo_base64") else ""
 
     items = []
     subtotal = 0.0
@@ -164,11 +127,12 @@ async def generate_pdf(
         # print("Rendered HTML to rendered_invoice.html")
 
         pdf = HTML(string=html_content, base_url=str(request.base_url)).write_pdf() # Added base_url for WeasyPrint if it needs to resolve relative paths for CSS/images if not embedded
+        if pdf is None:
+            raise HTTPException(status_code=500, detail="PDF generation failed and returned None.")
     except Exception as e:
         print(f"Error during PDF generation: {e}") # Log error to console
         # For more detailed WeasyPrint errors, you might need to check its logs or use a debugger
         raise HTTPException(status_code=500, detail=f"Error generating PDF. Check server logs. Details: {str(e)[:200]}")
-
 
     return StreamingResponse(
         io.BytesIO(pdf),

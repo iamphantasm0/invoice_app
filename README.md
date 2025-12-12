@@ -26,6 +26,38 @@ You can try the app here:
 
 ---
 
+## ⚙️ Configuration
+
+The app uses environment variables for easy customization. Configuration is stored in a `.env` file.
+
+> **Note:** The `.env` file is gitignored for privacy. Your sensitive business information stays local.
+
+1. **Copy the example file:**
+   ```bash
+   cp .env.example .env
+   ```
+
+2. **Edit `.env` with your details:**
+   - Company name, owner, phone
+   - Bank account details
+   - Payment policy
+   - Logo (Base64 encoded - see instructions in `.env.example`)
+   - Currency symbol
+
+3. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Run the app:**
+   ```bash
+   python app/main.py
+   ```
+
+The app will be available at `http://127.0.0.1:8002`
+
+---
+
 ## 🔧 Customization
 
 If you or your business needs a **more robust version** of this app — such as:

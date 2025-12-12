@@ -11,6 +11,10 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from weasyprint import HTML # type: ignore
 import uvicorn
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = FastAPI(title="Invoice Generator API", version="1.3.0") # Incremented version
 
@@ -25,41 +29,33 @@ if not os.path.exists(STATIC_DIR):
     os.makedirs(STATIC_DIR, exist_ok=True)
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
-# Placeholder Base64 encoded image (e.g., a simple 1x1 transparent pixel or your actual logo)
-# You should replace this with your actual logo's base64 string
-# To get base64 of your logo:
-# 1. Online tool: Search "image to base64"
-# 2. Python:
-#    with open("path_to_your_logo.png", "rb") as image_file:
-#        encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
-#    print(encoded_string)
-PLACEHOLDER_LOGO_BASE64 = "iVBORw0KGgoAAAANSUhEUgAAAJYAAABkCAQAAABkASRIAAAAxUlEQVR42u3PMQEAAAgEoDe50yLg0g7g7A4BCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIKgA/gBNr0AARGlZMAAAAAASUVORK5CYII=" # Example: A large transparent PNG
-
+# Load configuration from environment variables
 COMPANY_DETAILS = {
-    "name": "ONYX and GOLD Fabrics",
-    "owner": "Abefe Alaso",
-    "phone": "08034343274",
-    # "address": "123 Fabric Lane, Textile City, NG", # Added example address
-    # "email": "info@onyxandgold.com", # Added example email
-    # "website": "www.onyxandgold.com", # Added example website
-    "logo_base64": PLACEHOLDER_LOGO_BASE64
+    "name": os.getenv("COMPANY_NAME", "O"),
+    "owner": os.getenv("COMPANY_OWNER", ""),
+    "phone": os.getenv("COMPANY_PHONE", ""),
+    "address": os.getenv("COMPANY_ADDRESS", ""), # Optional
+    "email": os.getenv("COMPANY_EMAIL", ""), # Optional
+    "website": os.getenv("COMPANY_WEBSITE", ""), # Optional
+    "logo_base64": os.getenv("LOGO_BASE64", "iVBORw0KGgoAAAANSUhEUgAAAJYAAABkCAQAAABkASRIAAAAxUlEQVR42u3PMQEAAAgEoDe50yLg0g7g7A4BCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIKgA/gBNr0AARGlZMAAAAAASUVORK5CYII=")
 }
 
-DEFAULT_PAYMENT_POLICY = (
+DEFAULT_PAYMENT_POLICY = os.getenv(
+    "DEFAULT_PAYMENT_POLICY",
     "PAYMENT POLICY: 75% Upfront and FULL PAYMENT TO BE COMPLETED BEFORE EVENT DATE.\n"
     "Note: Only financial commitment secures date.\n"
     "Note: A deposit is an agreement to our ‘PAYMENT POLICY’."
 )
 
 PAYMENT_DETAILS = {
-    "bank_name": "Zenith Bank PLC",
-    "account_name": "ONYX AND GOLD FABRICS (Adebimpe Aderemi)",
-    "account_number": "1002553295",
+    "bank_name": os.getenv("BANK_NAME", ""),
+    "account_name": os.getenv("ACCOUNT_NAME", ""),
+    "account_number": os.getenv("ACCOUNT_NUMBER", ""),
     # "payment_terms": DEFAULT_PAYMENT_POLICY, # This will now come from the form
-    "additional_info": "Thank you for your prompt payment." # General thank you
+    "additional_info": os.getenv("PAYMENT_ADDITIONAL_INFO", "") # General thank you
 }
 
-CURRENCY_SYMBOL = "NGN"
+CURRENCY_SYMBOL = os.getenv("CURRENCY_SYMBOL", "NGN")
 
 @app.get("/", response_class=HTMLResponse)
 async def invoice_form(request: Request):

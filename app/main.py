@@ -79,6 +79,10 @@ def verify(credentials: HTTPBasicCredentials = Depends(security)):
         raise HTTPException(status_code=401)
     return credentials
 
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
+
 
 @app.get("/", response_class=HTMLResponse)
 async def invoice_form(request: Request, credentials: HTTPBasicCredentials = Depends(verify)):

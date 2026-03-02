@@ -12,12 +12,22 @@ from fastapi.staticfiles import StaticFiles
 from weasyprint import HTML # type: ignore
 import uvicorn
 from dotenv import load_dotenv
+from fastapi import Depends
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
+import secrets
+from slowapi import Limiter
+from slowapi.util import get_remote_address
+
+limiter = Limiter(key_func=get_remote_address)
+
+security = HTTPBasic()
 
 # Load environment variables from .env file
 load_dotenv()
 
 app = FastAPI(title="Invoice Generator API", version="1.3.0") # Incremented version
-
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 # --- Configuration ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
@@ -57,8 +67,16 @@ PAYMENT_DETAILS = {
 
 CURRENCY_SYMBOL = os.getenv("CURRENCY_SYMBOL", "NGN")
 
+
+def verify(credentials: HTTPBasicCredentials = Depends(security)):
+    ok = secrets.compare_digest(credentials.password, os.getenv("APP_PASSWORD"))
+    if not ok:
+        raise HTTPException(status_code=401)
+    return credentials
+
+
 @app.get("/", response_class=HTMLResponse)
-async def invoice_form(request: Request):
+async def invoice_form(request: Request, credentials: HTTPBasicCredentials = Depends(verify)):
     invoice_number = f"INV-{uuid.uuid4().hex[:6].upper()}"
     return templates.TemplateResponse("form.html", {
         "request": request,
@@ -68,8 +86,10 @@ async def invoice_form(request: Request):
     })
 
 @app.post("/generate-pdf", response_class=StreamingResponse)
+@limiter.limit("10/minute")
 async def generate_pdf(
     request: Request,
+    credentials: HTTPBasicCredentials = Depends(verify),
     client_name: str = Form(...),
     client_address: Optional[str] = Form(None),
     client_phone: Optional[str] = Form(None),
